@@ -9,7 +9,7 @@ class HashMap {
   hash(key) {
     let hashCode = 0;
     const primeNum = 33;
-    for (let i = 0; i < primeNum; i++) {
+    for (let i = 0; i < key.length; i++) {
       hashCode = (primeNum * hashCode + key.charCodeAt(i)) % this.#capacity;
     }
     return hashCode;
