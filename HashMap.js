@@ -73,6 +73,12 @@ class HashMap {
     return false;
   }
 
+  clear() {
+    this.#capacity = 16;
+    this.#size = 0;
+    this.#buckets = new Array(this.#capacity);
+  }
+
   length() {
     return this.#size;
   }
