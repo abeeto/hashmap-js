@@ -44,12 +44,18 @@ class HashMap {
     }
     let bucketList = this.#buckets[bucketIndex];
     if (bucketList === undefined) return null;
-    bucketList.entries.forEach((node) => {
-      if (node.value.key === key) {
-        console.log(node.value.value);
-        return node.value.value;
-      }
-    });
+    let target = bucketList.entries.find((node) => node.value.key === key);
+    return target ? target.value.value : null;
+  }
+
+  has(key) {
+    let bucketIndex = this.hash(key);
+    let bucketList = this.#buckets[bucketIndex];
+    if (bucketList) {
+      let target = bucketList.entries.find((node) => node.value.key === key);
+      return target !== undefined;
+    }
+    return false;
   }
 
   length() {
