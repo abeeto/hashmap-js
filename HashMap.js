@@ -67,6 +67,7 @@ class HashMap {
       );
       let targetIndex = bucketList.find(nodeToRemove);
       bucketList.removeAt(targetIndex);
+      this.#size = this.#size - 1;
       return true;
     }
     return false;
