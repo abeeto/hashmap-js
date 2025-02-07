@@ -70,7 +70,10 @@ export default class LinkedList {
   contains(value) {
     let target = this.#head;
     while (target) {
-      if (target.value === value) {
+      if (
+        (typeof value === "object" && target.value === value.value) ||
+        target.value === value
+      ) {
         return true;
       }
       target = target.next;
@@ -82,7 +85,12 @@ export default class LinkedList {
     let target = this.#head;
     let index = 0;
     while (target) {
-      if (target.value === value) return index;
+      if (
+        (typeof value === "object" && target.value === value.value) ||
+        target.value === value
+      ) {
+        return index;
+      }
       index++;
       target = target.next;
     }
@@ -98,10 +106,14 @@ export default class LinkedList {
 
   removeAt(index) {
     let toRemove = this.at(index);
-    if (toRemove) {
+    if (index === 0 && toRemove) {
+      this.#head = null;
+      this.#tail = null;
+    } else if (toRemove) {
       let backNode = this.at(index - 1);
       backNode.next = toRemove.next;
     }
+    this.#size = this.#size - 1;
   }
 
   toString() {

@@ -58,6 +58,20 @@ class HashMap {
     return false;
   }
 
+  remove(key) {
+    let bucketIndex = this.hash(key);
+    let bucketList = this.#buckets[bucketIndex];
+    if (bucketList) {
+      let nodeToRemove = bucketList.entries.find(
+        (node) => node.value.key === key
+      );
+      let targetIndex = bucketList.find(nodeToRemove);
+      bucketList.removeAt(targetIndex);
+      return true;
+    }
+    return false;
+  }
+
   length() {
     return this.#size;
   }
