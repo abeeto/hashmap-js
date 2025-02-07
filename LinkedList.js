@@ -106,9 +106,11 @@ export default class LinkedList {
 
   removeAt(index) {
     let toRemove = this.at(index);
-    if (index === 0 && toRemove) {
+    if (index === 0 && this.#size === 1) {
       this.#head = null;
       this.#tail = null;
+    } else if (index === 0 && toRemove) {
+      this.#head = toRemove.next;
     } else if (toRemove) {
       let backNode = this.at(index - 1);
       backNode.next = toRemove.next;

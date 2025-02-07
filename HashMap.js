@@ -7,7 +7,7 @@ class HashMap {
   #loadFactor;
   constructor() {
     this.#capacity = 16;
-    this.#loadFactor = 0.7;
+    this.#loadFactor = 0.75;
     this.#size = 0;
     this.#buckets = new Array(this.#capacity);
   }
@@ -28,6 +28,14 @@ class HashMap {
     } else if (this.#size >= Math.floor(this.#capacity * this.#loadFactor)) {
       // TODO: find way to resize map to double capacity
       console.log("Should resize here!");
+      this.#capacity *= 2;
+      let allEntries = this.entries().map((entry) => {
+        return { key: entry[0], value: entry[1] };
+      });
+      this.clear();
+      allEntries.forEach((entry) => {
+        this.set(entry.key, entry.value);
+      });
     }
     if (this.#buckets[bucketIndex] === undefined) {
       this.#buckets[bucketIndex] = new LinkedList();
@@ -82,4 +90,57 @@ class HashMap {
   length() {
     return this.#size;
   }
+
+  keys() {
+    return this.#buckets
+      .map((bucket) =>
+        bucket.entries.reduce((keys, currentNode) => {
+          keys.push(currentNode.value.key);
+          return keys;
+        }, new Array())
+      )
+      .flat();
+  }
+
+  values() {
+    return this.#buckets
+      .map((bucket) =>
+        bucket.entries.reduce((values, currentNode) => {
+          values.push(currentNode.value.value);
+          return values;
+        }, new Array())
+      )
+      .flat();
+  }
+  entries() {
+    return this.#buckets
+      .map((bucket) =>
+        bucket.entries.reduce((entries, currentNode) => {
+          entries.push([currentNode.value.key, currentNode.value.value]);
+          return entries;
+        }, new Array())
+      )
+      .flat();
+  }
 }
+
+const test = new HashMap(); // or HashMap() if using a factory
+test.set("apple", "red");
+test.set("banana", "yellow");
+test.set("carrot", "orange");
+test.set("dog", "brown");
+test.set("elephant", "gray");
+test.set("frog", "green");
+test.set("grape", "purple");
+test.set("hat", "black");
+test.set("ice cream", "white");
+test.set("jacket", "blue");
+test.set("kite", "pink");
+test.set("lion", "golden");
+
+test.set("ice cream", "bubblegum");
+test.set("carrot", "red");
+test.set("frog", "blue");
+test.set("elephant", "mexican");
+
+test.set("moon", "silver");
