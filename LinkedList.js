@@ -128,4 +128,14 @@ export default class LinkedList {
   get size() {
     return this.#size;
   }
+
+  get entries() {
+    let allNodes = [];
+    let target = this.#head;
+    while (target) {
+      allNodes.push(target);
+      target = target.next;
+    }
+    return allNodes;
+  }
 }
