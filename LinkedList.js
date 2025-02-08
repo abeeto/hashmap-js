@@ -7,6 +7,10 @@ class Node {
     this.#nextNode = null;
   }
 
+  set value(value) {
+    this.#value = value;
+  }
+
   set next(node) {
     this.#nextNode = node;
   }
