@@ -1,25 +1,34 @@
-import LinkedList from "./LinkedList.js";
-let list = new LinkedList();
-list.prepend("A");
-console.log(list.toString());
+import HashMap from "./HashMap.js";
 
-list.append("B");
-console.log(list.toString());
+const test = new HashMap(); // or HashMap() if using a factory
+test.set("apple", "red");
+test.set("banana", "yellow");
+test.set("carrot", "orange");
+test.set("dog", "brown");
+test.set("elephant", "gray");
+test.set("frog", "green");
+test.set("grape", "purple");
+test.set("hat", "black");
+test.set("ice cream", "white");
+test.set("jacket", "blue");
+test.set("kite", "pink");
+test.set("lion", "golden");
 
-list.prepend("C");
-console.log(list.toString());
+test.set("ice cream", "bubblegum");
+test.set("carrot", "red");
+test.set("frog", "blue");
+test.set("elephant", "mexican");
 
-list.prepend("D");
-console.log(list.toString());
+test.set("moon", "silver");
 
-list.insertAt("F", 2);
-console.log(list.toString());
+console.log(test.get("moon"));
+console.log(test.get("frog"));
+console.log(test.get("apple"));
 
-list.append("J");
-console.log(list.toString());
+console.log(test.length());
+test.remove("hat");
+console.log(test.get("hat"));
+console.log(test.get("grape"));
+console.log(test.length());
 
-list.removeAt(2);
-console.log(list.toString());
-
-console.log(list.size);
-console.log(list.find("B"));
+console.log(test.entries());
