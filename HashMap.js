@@ -1,6 +1,6 @@
 import LinkedList from "./LinkedList.js";
 
-class HashMap {
+export default class HashMap {
   #buckets;
   #capacity;
   #size;
@@ -23,15 +23,25 @@ class HashMap {
 
   set(key, value) {
     let bucketIndex = this.hash(key);
+    let existingKeys = this.keys();
+    let alreadyHaveKey = existingKeys.includes(key);
     if (bucketIndex < 0 || bucketIndex >= this.#buckets.length) {
       throw new Error("Trying to access index out of bounds");
+    } else if (alreadyHaveKey) {
+      let target = this.#buckets[bucketIndex].head;
+      while (target) {
+        if (target.value.key === key) {
+          target.value.value = value;
+        }
+        target = target.next;
+      }
+      return;
     } else if (this.#size >= Math.floor(this.#capacity * this.#loadFactor)) {
-      // TODO: find way to resize map to double capacity
-      console.log("Should resize here!");
       this.#capacity *= 2;
       let allEntries = this.entries().map((entry) => {
         return { key: entry[0], value: entry[1] };
       });
+      allEntries.push({ key, value });
       this.clear();
       allEntries.forEach((entry) => {
         this.set(entry.key, entry.value);
@@ -80,9 +90,7 @@ class HashMap {
     }
     return false;
   }
-
   clear() {
-    this.#capacity = 16;
     this.#size = 0;
     this.#buckets = new Array(this.#capacity);
   }
@@ -123,24 +131,3 @@ class HashMap {
       .flat();
   }
 }
-
-const test = new HashMap(); // or HashMap() if using a factory
-test.set("apple", "red");
-test.set("banana", "yellow");
-test.set("carrot", "orange");
-test.set("dog", "brown");
-test.set("elephant", "gray");
-test.set("frog", "green");
-test.set("grape", "purple");
-test.set("hat", "black");
-test.set("ice cream", "white");
-test.set("jacket", "blue");
-test.set("kite", "pink");
-test.set("lion", "golden");
-
-test.set("ice cream", "bubblegum");
-test.set("carrot", "red");
-test.set("frog", "blue");
-test.set("elephant", "mexican");
-
-test.set("moon", "silver");
